@@ -34,9 +34,17 @@ const Day = ({
         <DayNumberCircle
           today={everyDate.today}
           everyDate={everyDate}
-          clickedData1={clickedDate1}
+          clickedDate1={clickedDate1}
+          clickedDate2={clickedDate2}
         >
-          <DayNumber everyDate={everyDate}>{everyDate.date.date}</DayNumber>
+          <DayNumber
+            today={everyDate.today}
+            everyDate={everyDate}
+            clickedDate1={clickedDate1}
+            clickedDate2={clickedDate2}
+          >
+            {everyDate.date.date}
+          </DayNumber>
         </DayNumberCircle>
       </DayNumberView>
     </>
@@ -48,17 +56,25 @@ type DayNumberProps = {
   everyDate: EveryDateType;
   clickedDate1: DateType;
   clickedDate2: DateType;
+  today: boolean;
 };
 
 const DayNumber = styled.Text`
   font-size: 20px;
   line-height: 23px;
-  color: ${({ everyDate, clickedDate1, clickedDate2 }: DayNumberProps) => {
-    // console.log('styled-components');
-    if (everyDate.today === true) {
+  color: ${({
+    everyDate,
+    clickedDate1,
+    clickedDate2,
+    today,
+  }: DayNumberProps) => {
+    if (
+      checkClickedDate(clickedDate1, everyDate.date) ||
+      checkClickedDate(clickedDate2, everyDate.date)
+    ) {
       return 'white';
     } else {
-      return 'black';
+      return today ? 'white' : 'black';
     }
   }};
 `;
@@ -89,9 +105,10 @@ const DayNumberCircle = styled.View`
     clickedDate1,
     clickedDate2,
   }: DayNumberCircleProps) => {
-    console.log(clickedDate1);
-    if (checkClickedDate(clickedDate1, everyDate.date)) {
-      console.log('yes');
+    if (
+      checkClickedDate(clickedDate1, everyDate.date) ||
+      checkClickedDate(clickedDate2, everyDate.date)
+    ) {
       return '#6290c8';
     } else {
       return today ? '#dfdfdf' : 'transparent';

@@ -42,22 +42,12 @@ const Calendar = ({}) => {
     if (clickedDate1 === undefined) {
       setClickedDate1(date);
     } else {
-      if (
-        checkClickedDate(clickedDate1, date)
-        // clickedDate1.year === date.year &&
-        // clickedDate1.month === date.month &&
-        // clickedDate1.date === date.date
-      ) {
+      if (checkClickedDate(clickedDate1, date)) {
         setClickedDate1(undefined);
       } else {
         if (clickedDate2 === undefined) {
           setClickedDate2(date);
-        } else if (
-          checkClickedDate(clickedDate2, date)
-          // clickedDate2.year === date.year &&
-          // clickedDate2.month === date.month &&
-          // clickedDate2.date === date.date
-        ) {
+        } else if (checkClickedDate(clickedDate2, date)) {
           setClickedDate2(undefined);
         } else {
           setClickedDate2(date);
