@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  checkClickedDate,
   DateType,
   days,
   EveryDateType,
@@ -40,31 +41,26 @@ const Calendar = ({}) => {
   const dayNumberViewOnClick = (date: DateType) => {
     if (clickedDate1 === undefined) {
       setClickedDate1(date);
-      console.log(1);
     } else {
       if (
-        clickedDate1.year === date.year &&
-        clickedDate1.month === date.month &&
-        clickedDate1.date === date.date
+        checkClickedDate(clickedDate1, date)
+        // clickedDate1.year === date.year &&
+        // clickedDate1.month === date.month &&
+        // clickedDate1.date === date.date
       ) {
-        console.log(2);
-
         setClickedDate1(undefined);
       } else {
         if (clickedDate2 === undefined) {
           setClickedDate2(date);
-          console.log(3);
         } else if (
-          clickedDate2.year === date.year &&
-          clickedDate2.month === date.month &&
-          clickedDate2.date === date.date
+          checkClickedDate(clickedDate2, date)
+          // clickedDate2.year === date.year &&
+          // clickedDate2.month === date.month &&
+          // clickedDate2.date === date.date
         ) {
-          console.log(4);
-
           setClickedDate2(undefined);
         } else {
           setClickedDate2(date);
-          console.log(5);
         }
       }
     }
@@ -98,7 +94,12 @@ const Calendar = ({}) => {
         })}
       </WeekContainer>
 
-      <Dates dateOnClick={dayNumberViewOnClick} everyDates={everyDates} />
+      <Dates
+        dateOnClick={dayNumberViewOnClick}
+        clickedDate1={clickedDate1}
+        clickedDate2={clickedDate2}
+        everyDates={everyDates}
+      />
 
       {}
     </CalenderContainer>

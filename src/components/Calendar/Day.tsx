@@ -1,14 +1,25 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 
-import { DateType, EveryDateType } from '../../logics/CalendarLogics';
+import {
+  checkClickedDate,
+  DateType,
+  EveryDateType,
+} from '../../logics/CalendarLogics';
 
 type DayProps = {
   everyDate: EveryDateType;
   dateOnClick: (date: DateType) => void;
+  clickedDate1: DateType | undefined;
+  clickedDate2: DateType | undefined;
 };
 
-const Day = ({ everyDate, dateOnClick }: DayProps) => {
+const Day = ({
+  everyDate,
+  dateOnClick,
+  clickedDate1,
+  clickedDate2,
+}: DayProps) => {
   const dayNumberViewOnClick = () => {
     dateOnClick(everyDate.date);
   };
@@ -20,10 +31,12 @@ const Day = ({ everyDate, dateOnClick }: DayProps) => {
           dayNumberViewOnClick();
         }}
       >
-        <DayNumberCircle todayYes={everyDate.today}>
-          <DayNumber todayYes={everyDate.today} everyDate={everyDate}>
-            {everyDate.date.date}
-          </DayNumber>
+        <DayNumberCircle
+          today={everyDate.today}
+          everyDate={everyDate}
+          clickedData1={clickedDate1}
+        >
+          <DayNumber everyDate={everyDate}>{everyDate.date.date}</DayNumber>
         </DayNumberCircle>
       </DayNumberView>
     </>
@@ -33,24 +46,17 @@ export default Day;
 
 type DayNumberProps = {
   everyDate: EveryDateType;
+  clickedDate1: DateType;
+  clickedDate2: DateType;
 };
 
 const DayNumber = styled.Text`
   font-size: 20px;
   line-height: 23px;
-  color: ${({ everyDate }: DayNumberProps) => {
-    let area = false;
-
-    if (everyDate.date.date !== undefined) {
-      if (everyDate.date.date > 10 && everyDate.date.date <= 20) {
-        area = true;
-      } else {
-        area = false;
-      }
-    }
-
-    if (area) {
-      return 'red';
+  color: ${({ everyDate, clickedDate1, clickedDate2 }: DayNumberProps) => {
+    // console.log('styled-components');
+    if (everyDate.today === true) {
+      return 'white';
     } else {
       return 'black';
     }
@@ -66,11 +72,31 @@ const DayNumberView = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const DayNumberCircle = styled.View<{ todayYes: boolean; clicked: boolean }>`
+type DayNumberCircleProps = {
+  today: boolean;
+  clickedDate1: DateType | undefined;
+  clickedDate2: DateType | undefined;
+  everyDate: EveryDateType;
+};
+
+const DayNumberCircle = styled.View`
   width: 32px;
   height: 32px;
   border-radius: 50;
-  background-color: '#6290C8';
+  background-color: ${({
+    everyDate,
+    today,
+    clickedDate1,
+    clickedDate2,
+  }: DayNumberCircleProps) => {
+    console.log(clickedDate1);
+    if (checkClickedDate(clickedDate1, everyDate.date)) {
+      console.log('yes');
+      return '#6290c8';
+    } else {
+      return today ? '#dfdfdf' : 'transparent';
+    }
+  }};
 
   justify-content: center;
   align-items: center;

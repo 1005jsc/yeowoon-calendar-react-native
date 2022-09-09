@@ -108,3 +108,26 @@ export const checkClickedAndReturnDates = (
 
   return everyDateClickedUpdated;
 };
+
+export const checkClickedDate = (
+  clickedDate: DateType | undefined,
+  dateNow: DateType
+) => {
+  if (dateNow.date) {
+    if (clickedDate) {
+      if (
+        clickedDate.year === dateNow.year &&
+        clickedDate.month === dateNow.month &&
+        clickedDate.date === dateNow.date
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+};
