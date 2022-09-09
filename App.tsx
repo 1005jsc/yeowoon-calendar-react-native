@@ -1,20 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import TextInputTest from './src/screens/TextView';
+
+import styled from 'styled-components/native';
+import { Provider } from 'react-redux';
+import store from './src/store';
+import Calendar from './src/components/Calendar/Calendar';
 
 export default function App() {
+  console.log('app');
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <Container>
+        <StatusBar style='auto' />
+        {/* <TextInputTest></TextInputTest> */}
+        {/* <CuratorIcon isOutLine={true} /> */}
+        <Calendar />
+      </Container>
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const Container = styled.View`
+  flex: 1;
+  align-items: center;
+  padding-top: 60px;
+`;
