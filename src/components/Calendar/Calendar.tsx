@@ -35,8 +35,40 @@ const Calendar = ({}) => {
     returnFirstDates({ ...dateState })
   );
 
-  const moveMonthLeft = () => {};
-  const moveMonthRight = () => {};
+  const moveMonthLeft = () => {
+    if (dateState.month > 0) {
+      setEveryDates(
+        returnFirstDates({ ...dateState, month: dateState.month - 1 })
+      );
+      setDateState({ ...dateState, month: dateState.month - 1 });
+    } else {
+      setEveryDates(
+        returnFirstDates({ ...dateState, year: dateState.year - 1, month: 11 })
+      );
+      setDateState({ ...dateState, year: dateState.year - 1, month: 11 });
+    }
+  };
+  const moveMonthRight = () => {
+    if (dateState.month < 11) {
+      setEveryDates(
+        returnFirstDates({ ...dateState, month: dateState.month + 1 })
+      );
+      setDateState({ ...dateState, month: dateState.month + 1 });
+    } else {
+      setEveryDates(
+        returnFirstDates({
+          ...dateState,
+          year: dateState.year + 1,
+          month: 0,
+        })
+      );
+      setDateState({
+        ...dateState,
+        year: dateState.year + 1,
+        month: 0,
+      });
+    }
+  };
 
   const dayNumberViewOnClick = (date: DateType) => {
     if (clickedDate1 === undefined) {
