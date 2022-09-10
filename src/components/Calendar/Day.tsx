@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 
 import {
@@ -132,7 +131,6 @@ type DayNumberRectangleProps = {
 
 const DayNumberRectangle = styled.View`
   position: absolute;
-  /* left: 50%; */
 
   ${({ everyDate, clickedDate1, clickedDate2 }: DayNumberRectangleProps) => {
     if (clickedDate1 && clickedDate2) {
@@ -160,7 +158,7 @@ const DayNumberRectangle = styled.View`
                 everyDate.date.date
               )
           ) {
-            return 'width: 100%;';
+            return 'width: 103%;';
           } else {
             return 'display:none';
           }
@@ -184,7 +182,7 @@ const DayNumberRectangle = styled.View`
                 everyDate.date.date
               )
           ) {
-            return 'width: 100%;';
+            return 'width: 103%;';
           } else {
             return 'display:none';
           }

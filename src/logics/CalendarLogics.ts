@@ -131,3 +131,18 @@ export const checkClickedDate = (
     return false;
   }
 };
+
+export const compareDates = (date1: DateType, date2: DateType) => {
+  if (
+    new Date(date1.year, date1.month, date1.date) <=
+    new Date(date2.year, date2.month, date2.date)
+  ) {
+    //정방향
+    console.log('1');
+    return [true, date1, date2];
+  } else {
+    // 역방향
+    console.log('2');
+    return [false, date2, date1];
+  }
+};

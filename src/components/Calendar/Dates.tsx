@@ -1,7 +1,6 @@
 import { DateType, EveryDateType } from '../../logics/CalendarLogics';
 import styled from 'styled-components/native';
 import Day from './Day';
-import { useEffect, useState } from 'react';
 
 type DatesProps = {
   dateOnClick: (date: DateType) => void;
@@ -16,8 +15,6 @@ const Dates = ({
   clickedDate1,
   clickedDate2,
 }: DatesProps) => {
-  // console.log('dates');
-
   return (
     <>
       <DatesContainer>

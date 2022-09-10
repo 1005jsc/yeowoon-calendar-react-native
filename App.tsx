@@ -5,7 +5,7 @@ import TextInputTest from './src/screens/TextView';
 import styled from 'styled-components/native';
 import { Provider } from 'react-redux';
 import store from './src/store';
-import Calendar from './src/components/Calendar/Calendar';
+import Calendar2 from './src/components/Calendar/Calendar2';
 
 export default function App() {
   console.log('app');
@@ -15,7 +15,7 @@ export default function App() {
         <StatusBar style='auto' />
         {/* <TextInputTest></TextInputTest> */}
         {/* <CuratorIcon isOutLine={true} /> */}
-        <Calendar />
+        <Calendar2 />
       </Container>
     </Provider>
   );

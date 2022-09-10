@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   checkClickedDate,
+  compareDates,
   DateType,
   days,
   EveryDateType,
@@ -11,14 +12,12 @@ import { calendarActions } from '../../modules/calendar';
 import { useAppDispatch } from '../../store';
 import styled from 'styled-components/native';
 import Dates from './Dates';
-import CuratorIcon from '../../../assets/icons/CuratorIcon';
-import MyPageIcon from '../../../assets/icons/MyPageIcon';
 import BackwardIcon from '../../../assets/icons/BackwardIcon';
 import ForwardIcon from '../../../assets/icons/ForwardIcon';
 
-const Calendar = ({}) => {
+const Calendar2 = () => {
   const dispatch = useAppDispatch();
-  const { determineChosenDate } = calendarActions;
+  const { determineChosenDates } = calendarActions;
 
   const [clickedDate1, setClickedDate1] = useState<DateType | undefined>(
     undefined
@@ -92,6 +91,14 @@ const Calendar = ({}) => {
     }
   };
 
+  const handleScheduleOnPress = () => {
+    if (compareDates(clickedDate1!, clickedDate2!)[0]) {
+      dispatch(determineChosenDates([clickedDate1!, clickedDate2!]));
+    } else {
+      dispatch(determineChosenDates([clickedDate2!, clickedDate1!]));
+    }
+  };
+
   return (
     <CalenderContainer>
       <Header>
@@ -128,17 +135,41 @@ const Calendar = ({}) => {
         clickedDate2={clickedDate2}
         everyDates={everyDates}
       />
+
+      {clickedDate1 &&
+        clickedDate2 &&
+        (compareDates(clickedDate1, clickedDate2)[0] ? (
+          <>
+            <SetScheduleButton onPress={handleScheduleOnPress}>
+              <SetScheduleText>
+                {clickedDate1.year}.{clickedDate1.month}.{clickedDate1.date} -{' '}
+                {clickedDate2.year}.{clickedDate2.month}.{clickedDate2.date}{' '}
+                등록하기
+              </SetScheduleText>
+            </SetScheduleButton>
+          </>
+        ) : (
+          <SetScheduleButton onPress={handleScheduleOnPress}>
+            <SetScheduleText>
+              {clickedDate2.year}.{clickedDate2.month}.{clickedDate2.date} -{' '}
+              {clickedDate1.year}.{clickedDate1.month}.{clickedDate1.date}{' '}
+              등록하기
+            </SetScheduleText>
+          </SetScheduleButton>
+        ))}
     </CalenderContainer>
   );
 };
-export default Calendar;
+export default Calendar2;
 
 const CalenderContainer = styled.View`
   position: relative;
   width: 86%;
-  height: 360px;
-  border: 1px solid black;
+  height: 440px;
   padding-top: 30px;
+  background-color: aliceblue;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `;
 
 const Header = styled.View`
@@ -165,7 +196,6 @@ const ButtonContainer = styled.View`
 const MonthButton = styled.TouchableOpacity`
   margin-left: 11px;
   margin-right: 11px;
-  /* height: 60%; */
 `;
 
 const WeekContainer = styled.View`
@@ -175,50 +205,22 @@ const WeekContainer = styled.View`
 
 const DayName = styled.Text`
   flex: 1;
-  /* border: 1px solid black; */
   text-align: center;
   font-size: 9px;
   color: #818080;
 `;
 
-const DaysContainer = styled.View`
-  width: 100%;
-  flex-flow: row;
-  flex-wrap: wrap;
-`;
-
-const ConfirmButtonContainer1 = styled.View`
-  width: 100%;
-  flex: 1;
-  flex-direction: row-reverse;
+const SetScheduleButton = styled.TouchableOpacity`
+  width: 96%;
+  height: 56px;
+  border-radius: 4px;
+  background-color: #6290c8;
+  justify-content: center;
   align-items: center;
-  position: relative;
-  align-items: center;
+  margin: auto;
 `;
 
-const ConfirmButtonContainer2 = styled.View`
-  width: 80px;
-  justify-content: space-between;
-  flex-flow: row;
-  margin-right: 12px;
-`;
-
-const CancelButton = styled.TouchableOpacity`
-  width: 32px;
-  background-color: transparent;
-`;
-
-const CancelButtonText = styled.Text`
-  font-size: 15px;
-  color: #9a9a9a;
-`;
-const ConfirmButton = styled.TouchableOpacity`
-  width: 32px;
-  background-color: transparent;
-`;
-
-const ConfirmButtonText = styled.Text`
-  font-size: 15px;
-
-  color: #6290c8;
+const SetScheduleText = styled.Text`
+  color: white;
+  font-size: 19px;
 `;

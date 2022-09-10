@@ -3,11 +3,13 @@ import { DateType } from '../logics/CalendarLogics';
 
 type StateType = {
   chosenDate: DateType | undefined;
+  chosenDates: DateType[] | undefined;
   //   clicked: boolean;
 };
 
 const initialState: StateType = {
   chosenDate: undefined,
+  chosenDates: undefined,
 };
 
 const calendarSlice = createSlice({
@@ -27,9 +29,11 @@ const calendarSlice = createSlice({
     },
     determineChosenDates: (
       state,
-      action: PayloadAction<DateType | undefined>
+      action: PayloadAction<DateType[] | undefined>
     ) => {
-      console.log('redux');
+      state.chosenDates = action.payload;
+
+      console.log(state.chosenDates);
     },
   },
 });
