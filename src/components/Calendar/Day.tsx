@@ -31,6 +31,11 @@ const Day = ({
           dayNumberViewOnClick();
         }}
       >
+        <DayNumberRectangle
+          everyDate={everyDate}
+          clickedDate1={clickedDate1}
+          clickedDate2={clickedDate2}
+        ></DayNumberRectangle>
         <DayNumberCircle
           today={everyDate.today}
           everyDate={everyDate}
@@ -83,9 +88,10 @@ const DayNumberView = styled.TouchableOpacity`
   height: 50px;
   min-width: 14%;
   flex: 1;
-  /* border: 1px solid black; */
+  border: 1px solid black;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 
 type DayNumberCircleProps = {
@@ -117,4 +123,79 @@ const DayNumberCircle = styled.View`
 
   justify-content: center;
   align-items: center;
+`;
+
+type DayNumberRectangleProps = {
+  clickedDate1: DateType | undefined;
+  clickedDate2: DateType | undefined;
+  everyDate: EveryDateType;
+};
+
+const DayNumberRectangle = styled.View`
+  position: absolute;
+  /* left: 50%; */
+
+  ${({ everyDate, clickedDate1, clickedDate2 }: DayNumberRectangleProps) => {
+    if (clickedDate1 && clickedDate2) {
+      if (clickedDate1.date && clickedDate2.date && everyDate.date) {
+        if (
+          new Date(clickedDate1.year, clickedDate1.month, clickedDate1.date) <
+          new Date(clickedDate2.year, clickedDate2.month, clickedDate2.date)
+        ) {
+          // 정방향
+          if (checkClickedDate(clickedDate1, everyDate.date)) {
+            return 'left: 50%; width: 50%;';
+          } else if (checkClickedDate(clickedDate2, everyDate.date)) {
+            return 'right: 50%; width: 50%;';
+          } else if (
+            new Date(clickedDate1.year, clickedDate1.month, clickedDate1.date) <
+              new Date(
+                everyDate.date.year,
+                everyDate.date.month,
+                everyDate.date.date
+              ) &&
+            new Date(clickedDate2.year, clickedDate2.month, clickedDate2.date) >
+              new Date(
+                everyDate.date.year,
+                everyDate.date.month,
+                everyDate.date.date
+              )
+          ) {
+            return 'width: 100%;';
+          } else {
+            return 'display:none';
+          }
+        } else {
+          // 역방향
+          if (checkClickedDate(clickedDate2, everyDate.date)) {
+            return 'left: 50%; width: 50%;';
+          } else if (checkClickedDate(clickedDate1, everyDate.date)) {
+            return 'right: 50%; width: 50%;';
+          } else if (
+            new Date(clickedDate2.year, clickedDate2.month, clickedDate2.date) <
+              new Date(
+                everyDate.date.year,
+                everyDate.date.month,
+                everyDate.date.date
+              ) &&
+            new Date(clickedDate1.year, clickedDate1.month, clickedDate1.date) >
+              new Date(
+                everyDate.date.year,
+                everyDate.date.month,
+                everyDate.date.date
+              )
+          ) {
+            return 'width: 100%;';
+          } else {
+            return 'display:none';
+          }
+        }
+      }
+    } else {
+      return 'display:none;';
+    }
+  }}
+  height: 27px;
+  margin: auto;
+  background-color: #cadaed;
 `;
