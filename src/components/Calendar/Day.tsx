@@ -88,7 +88,6 @@ const DayNumberView = styled.TouchableOpacity`
   height: 50px;
   min-width: 14%;
   flex: 1;
-  border: 1px solid black;
   justify-content: center;
   align-items: center;
   position: relative;

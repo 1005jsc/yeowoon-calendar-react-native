@@ -11,6 +11,10 @@ import { calendarActions } from '../../modules/calendar';
 import { useAppDispatch } from '../../store';
 import styled from 'styled-components/native';
 import Dates from './Dates';
+import CuratorIcon from '../../../assets/icons/CuratorIcon';
+import MyPageIcon from '../../../assets/icons/MyPageIcon';
+import BackwardIcon from '../../../assets/icons/BackwardIcon';
+import ForwardIcon from '../../../assets/icons/ForwardIcon';
 
 const Calendar = ({}) => {
   const dispatch = useAppDispatch();
@@ -97,17 +101,19 @@ const Calendar = ({}) => {
         </HeaderLeft>
         <ButtonContainer>
           <MonthButton
-            title='left'
             onPress={() => {
               moveMonthLeft();
             }}
-          />
+          >
+            <BackwardIcon />
+          </MonthButton>
           <MonthButton
-            title='right'
             onPress={() => {
               moveMonthRight();
             }}
-          />
+          >
+            <ForwardIcon />
+          </MonthButton>
         </ButtonContainer>
       </Header>
       <WeekContainer>
@@ -122,8 +128,6 @@ const Calendar = ({}) => {
         clickedDate2={clickedDate2}
         everyDates={everyDates}
       />
-
-      {}
     </CalenderContainer>
   );
 };
@@ -134,13 +138,14 @@ const CalenderContainer = styled.View`
   width: 86%;
   height: 360px;
   border: 1px solid black;
+  padding-top: 30px;
 `;
 
 const Header = styled.View`
   flex-flow: row;
   justify-content: space-between;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
   align-items: center;
 `;
 
@@ -157,9 +162,9 @@ const MonthAndYear = styled.Text`
 const ButtonContainer = styled.View`
   flex-flow: row;
 `;
-const MonthButton = styled.Button`
-  margin-left: 7px;
-  margin-right: 7px;
+const MonthButton = styled.TouchableOpacity`
+  margin-left: 11px;
+  margin-right: 11px;
   /* height: 60%; */
 `;
 
